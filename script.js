@@ -6,77 +6,90 @@ function getComputerChoice() {
     return choices[computerIndex];
 }
 
-  
-
-function getHumanChoice() {
-    let playerchoice = prompt('what are you picking?(rock, paper, scissors)').toLowerCase();
-    return playerchoice;
-}
- 
-
-
  let initialHumanScore = 0;
  let initialComputerScore = 0;
 
  console.log(initialHumanScore);
  console.log(initialComputerScore);
 
-function playGame() {
-    for(let i = 0; i < 5; i++) {
-       console.log( `Round ${i + 1}`); 
-       playRound();
-    }
+ const resultDiv = document.getElementById("result");
+const humanScoreSpan = document.getElementById("humanScore");
+const computerScoreSpan = document.getElementById("computerScore");
+
+
+
     
 
- function playRound() {
-    const humanChoice = getHumanChoice();
+ function playRound(humanChoice) {
     const computerChoice = getComputerChoice();
-    console.log(`Human choice ${humanChoice}, Computer Choice: ${computerChoice}`)
+    let resultMessage = `Human choice ${humanChoice}, Computer Choice: ${computerChoice}`
  
  
    
    if (humanChoice === computerChoice) { 
-    console.log('its a tie, GOOD GAME!!') 
+    resultMessage += 'its a tie, GOOD GAME!!'; 
     return;
-}
+} else {
 
 
     if (humanChoice === 'rock' &&  computerChoice === 'paper') {
         initialComputerScore++;
-        console.log('Oops, better luck next time, score: ' + initialComputerScore);
+        resultMessage = 'Oops, better luck next time, score: ' + initialComputerScore;
     }
 
     if (humanChoice === 'paper' && computerChoice === 'rock') {
         initialHumanScore++;
-        console.log('Yay! You got a point!' + initialHumanScore);
+         resultMessage = 'Yay! You got a point!' + initialHumanScore;
     }
 
         if (humanChoice === 'rock' && computerChoice === 'scissors') {
          initialHumanScore++
-        console.log('Yay! You got a point!: score' + initialHumanScore);
+         resultMessage = 'Yay! You got a point!: score' + initialHumanScore;
         }
     
         
 
         if (humanChoice === 'scissors' && computerChoice === 'rock') {
         initialComputerScore++
-         console.log('Oops, better luck next time, score: ' + initialHumanScore);
+          resultMessage = 'Oops, better luck next time, score: ' + initialHumanScore;
 
         }
 
         if (humanChoice === 'scissors' && computerChoice === 'paper') {
             initialHumanScore++;
-            console.log('Yay! You got a point!' + initialHumanScore);
+           resultMessage = 'Yay! You got a point!' + initialHumanScore;
          }
+        }
+
+         resultDiv.textContent = resultMessage;
+         humanScoreSpan.textContent = initialHumanScore;
+         computerScoreSpan.textContent = initialComputerScore;
 
        
 }
 
-}
+
+document.addEventListener('DOMContentLoaded', () => {
+const buttons = document.querySelectorAll(".btn");
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const humanChoice = event.target.getAttribute("data-choice"); 
+            playRound(humanChoice);
+        })
+
+    });
+
+})
+
+
+    
+
+
 
 
          
 
-        playGame();
+        
 
 
